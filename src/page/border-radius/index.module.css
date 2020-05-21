@@ -1,0 +1,78 @@
+.main {
+    width: 400px;
+    height: 400px;
+    padding: 50px;
+    margin: 50px auto;
+    position: relative;
+}
+.content {
+    width: 300px;
+    height: 300px;
+    background-color: #5b6dcd;
+}
+
+.sliderTop {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    right: 50px;
+}
+
+.sliderRight {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    bottom: 50px;
+    height: calc(100% - 100px);
+}
+
+.sliderBottom {
+    position: absolute;
+    right: 50px;
+    left: 50px;
+    bottom: 0;
+}
+
+.sliderLeft {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    bottom: 50px;
+    height: calc(100% - 100px);
+}
+
+.radioTL {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+}
+
+.radioTR {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+}
+
+.radioBR {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    margin: 0;
+}
+
+.radioBL {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    margin: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
