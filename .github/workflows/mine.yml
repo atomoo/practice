@@ -1,9 +1,9 @@
-name: HexoDeployCI
+name: deployCLI
 
 on:
   push:
     branches: 
-      - source
+      - master
 
 jobs:
   build:
