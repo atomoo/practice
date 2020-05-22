@@ -1,0 +1,39 @@
+name: HexoDeployCI
+
+on:
+  push:
+    branches: 
+      - source
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: install
+      uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install # will run `yarn install` command
+    - name: build
+      uses: borales/actions-yarn@v2.0.0
+      with:
+          cmd: build # will run `yarn build` command
+    - name: deploy
+      run: |
+        cd build
+        git init
+        git add .
+        git config user.name "bot"
+        git config user.email "actions@github.com"
+        git commit -m 'auto deploy'
+        git push --force https://${{github.actor}}:${{ secrets.GITHUB_TOKEN }}@github.com/atomoo/practice.git HEAD:gh-page
