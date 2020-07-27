@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect, useRef} from 'react';
-import {Row, Col, Button} from 'antd';
+import {Row, Col, Button, InputNumber} from 'antd';
 
 import styles from './index.module.css';
 
@@ -13,12 +13,11 @@ function add(prev: string, increment: number) {
 }
 
 export function ColorCycle() {
-    const [color, setColor] = useState('FFFFFF');
+    const [color, setColor] = useState('000000');
     const [loop, toggleLoop] = useState(false);
+    const [timeInteval, setTimeinteval] = useState(250);
     const increment = useRef([0, 0, 0]);
     const timer = useRef(0);
-
-    const timeInteval = 250;
 
     const changeColor = useCallback(
         () => {
@@ -39,7 +38,7 @@ export function ColorCycle() {
                 );
             }
         },
-        [loop]
+        [loop, timeInteval]
     );
 
     useEffect(
@@ -47,7 +46,6 @@ export function ColorCycle() {
             if (loop) {
                 timer.current = window.setTimeout(
                     () => {
-                        console.log('effect');
                         changeColor();
                     },
                     timeInteval
@@ -59,7 +57,7 @@ export function ColorCycle() {
                 }
             };
         },
-        [loop, changeColor]
+        [loop, changeColor, timeInteval]
     );
 
     const start = useCallback(
@@ -77,11 +75,17 @@ export function ColorCycle() {
     const stop = useCallback(
         () => {
             toggleLoop(false);
-            console.log(timer.current);
             if (timer.current) {
                 clearTimeout(timer.current);
                 timer.current = 0;
             }
+        },
+        []
+    );
+
+    const onTimeChange = useCallback(
+        value => {
+            setTimeinteval(value);
         },
         []
     );
@@ -101,9 +105,12 @@ export function ColorCycle() {
             </Row>
         </div> */}
         <div className={styles.colorControl}>
-            <Row>
-                <Col span={12}><Button onClick={start}>start</Button></Col>
-                <Col span={12}><Button onClick={stop}>stop</Button></Col>
+            <Row justify="center">
+                <Col span={8}>
+                    <div>时间间隔：<InputNumber disabled={loop} value={timeInteval} onChange={onTimeChange} /> </div>
+                </Col>
+                <Col span={4}><Button onClick={start}>start</Button></Col>
+                <Col span={4}><Button onClick={stop}>stop</Button></Col>
             </Row>
         </div>
         <div className={styles.colorBox} style={{backgroundColor: `#${color}`}}></div>
