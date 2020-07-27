@@ -3,6 +3,7 @@ import {HashRouter as Router, Route, Link, RouteComponentProps} from 'react-rout
 import {List, PageHeader} from 'antd';
 
 import {BorderRadius} from './page/border-radius';
+import {ColorCycle} from './page/color-cycle';
 import './App.css';
 
 const ROUTE_CONFS = [
@@ -10,6 +11,11 @@ const ROUTE_CONFS = [
         path: '/border-radius',
         component: BorderRadius,
         title: 'Border Radius'
+    },
+    {
+        path: '/color-cycle',
+        component: ColorCycle,
+        title: 'Color Cycle'
     }
 ];
 

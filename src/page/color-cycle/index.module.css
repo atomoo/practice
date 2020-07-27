@@ -1,0 +1,11 @@
+.colorBox {
+    width: 300px;
+    height: 300px;
+    margin: 10px auto;
+    border: 1px solid #eee;
+}
+
+.colorControl {
+    width: 300px;
+    margin: 20px auto;
+}
