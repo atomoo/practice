@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter as Router, Route, Link, RouteComponentProps} from 'react-router-dom';
+import {HashRouter as Router, Route, Link, Routes, useNavigate} from 'react-router-dom';
 import {List, PageHeader} from 'antd';
 
 import {BorderRadius} from './page/border-radius';
@@ -37,41 +37,45 @@ function Home() {
     );
 }
 
+
+function WrapRoute(props: any) {
+    const Component = props.component;
+    const navigate  = useNavigate();
+    return <React.Fragment>
+        <PageHeader
+            className="site-page-header"
+            onBack={
+                () => {
+                    navigate(-1);
+                }
+            }
+            title="Home"
+            subTitle={`This is a ${props.title}`}
+        />
+        <Component />
+    </React.Fragment>;
+}
+
 function App() {
     return (
         <div className="App">
             <Router>
-                <Route path="/" exact component={Home} />
-                {
-                    ROUTE_CONFS.map(
-                        route => {
-                            const {path, component, ...other} = route;
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    {
+                        ROUTE_CONFS.map(
+                            route => {
+                                const {path, component, ...other} = route;
                             return (<Route
                                 key={path}
                                 path={route.path}
                                 {...other}
-                                render={
-                                    (routeProps: RouteComponentProps) => {
-                                        const Component = route.component;
-                                        return <React.Fragment>
-                                            <PageHeader
-                                                className="site-page-header"
-                                                onBack={
-                                                    () => {
-                                                        routeProps.history.goBack();
-                                                    }
-                                                }
-                                                title="Home"
-                                                subTitle={`This is a ${route.title}`}
-                                            />
-                                            <Component />
-                                        </React.Fragment>;
-                                    }
-                                }
+                                element={<WrapRoute {...route} />}
                             />);
-                        }
-                    )
-                }
+                            }
+                        )
+                    }
+                </Routes>
             </Router>
         </div>
     );
